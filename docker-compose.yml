@@ -3,6 +3,7 @@ version: "3"
 services:
   db:
     image: mysql:8.4
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-time-zone="+09:00"
     ports:
     - "3315:3306"
     volumes:
@@ -10,6 +11,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "root"
       MYSQL_DATABASE: "cms"
+      TZ: "Asia/Tokyo"
 
   xmr:
     image: ghcr.io/xibosignage/xibo-xmr:develop
@@ -26,10 +28,11 @@ services:
     volumes:
     - ./:/var/www/cms
     ports:
-    - "80:80"
+    - "${CMS_PORT:-80}:80"
     environment:
       CMS_DEV_MODE: "true"
       MYSQL_DATABASE: "cms"
+      TZ: "Asia/Tokyo"
 
   memcached:
     image: memcached:alpine
@@ -38,9 +41,10 @@ services:
   swagger:
     image: swaggerapi/swagger-ui:latest
     ports:
-    - "8080:8080"
+    - "8082:8080"
     environment:
     - API_URL=http://localhost/swagger.json
 
   quickchart:
     image: ianw/quickchart
+

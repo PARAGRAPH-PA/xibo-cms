@@ -19,187 +19,94 @@
  * along with Xibo.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ArrowRight, Play } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { RESOURCE_CARDS, SERVICE_CARDS, type ServiceCard, type VideoLink } from './WelcomeConfig';
-import VideoModal from './components/VideoModal';
+import { SERVICE_CARDS, type ServiceCard } from './WelcomeConfig';
 
 import Button from '@/components/ui/Button';
 import { useUserContext } from '@/context/UserContext';
 import { markWelcomeSeen } from '@/services/welcomeApi';
-import { UserType } from '@/types/user';
 import { hasFeature } from '@/utils/permissions';
 
 export default function Welcome() {
   const { t } = useTranslation();
   const { user } = useUserContext();
-  const [videoModalData, setVideoModalData] = useState<VideoLink[] | null>(null);
 
-  const isSuperAdmin = user?.userTypeId === UserType.SuperAdmin;
-
-  // Mark welcome wizard as seen on first visit
   useEffect(() => {
-    if (user?.newUserWizard === 0) {
-      markWelcomeSeen().catch(() => {});
-    }
-  }, [user?.newUserWizard]);
+    markWelcomeSeen().catch(() => {});
+  }, []);
 
   const hasRequiredFeatures = (featureFlags: string[]) => {
     if (!user) return false;
     return featureFlags.some((flag) => hasFeature(user, flag));
   };
 
-  // Filter service cards by user features
   const visibleServiceCards = SERVICE_CARDS.filter((card) =>
     hasRequiredFeatures(card.featureFlags),
   );
 
-  // Filter resource cards (some are Xibo-branded only)
-  const isXiboThemed = user?.branding?.appName === 'Xibo';
-  const visibleResourceCards = RESOURCE_CARDS.filter((card) => !card.xiboOnly || isXiboThemed);
-
-  const openVideoModal = (videos: VideoLink[]) => {
-    if (videos.length > 0) {
-      setVideoModalData(videos);
-    }
-  };
-
   const renderServiceCardLinks = (card: ServiceCard) => {
-    return card.links
-      .filter((link) => !link.xiboOnly || isXiboThemed)
-      .map((link) => {
-        const variant = link.variant ?? 'primary';
-
-        if (link.isExternal) {
-          return (
-            <a key={link.labelKey} href={link.to} target="_blank" rel="noopener noreferrer">
-              <Button variant={variant} rightIcon={variant === 'link' ? ArrowRight : undefined}>
-                {t(link.labelKey)}
-              </Button>
-            </a>
-          );
-        }
-
-        return (
-          <Link key={link.to} to={link.to}>
-            <Button variant={variant}>{t(link.labelKey)}</Button>
-          </Link>
-        );
-      });
+    return card.links.map((link) => {
+      const variant = link.variant ?? 'primary';
+      return (
+        <Link key={link.to} to={link.to}>
+          <Button variant={variant}>{t(link.labelKey)}</Button>
+        </Link>
+      );
+    });
   };
 
   return (
     <div className="relative h-full overflow-y-auto">
       {/* Hero Section */}
-      <section className="flex py-20 bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(99,102,241,0.18)_0%,rgba(0,0,0,0)_100%)]">
-        <div className="flex flex-col items-center max-w-234.5 mx-auto">
-          <h2 className="mb-1 text-3xl font-bold text-gray-900">
-            {t('Welcome to the {{appName}} CMS', {
-              appName: user?.branding?.appName ?? 'Xibo',
-            })}
+      <section className="flex py-14 bg-gradient-to-b from-blue-50/50 to-transparent border-b border-gray-100">
+        <div className="flex flex-col items-center max-w-3xl mx-auto text-center px-4">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 mb-4">
+            SUSTAINAMOTION デジタルサイネージ
+          </span>
+          <h2 className="mb-3 text-3xl font-bold text-gray-900 tracking-tight">
+            {t('Welcome to SUSTAINAMOTION CMS', 'SUSTAINAMOTION CMS へようこそ')}
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 leading-relaxed max-w-2xl text-sm sm:text-base">
             {t(
-              'The Content Management System (CMS) allows users to create, manage and update content to be shown on Displays. Upload images and videos, create layout designs, schedule content and manage the display network.',
+              'コンテンツ管理システム（CMS）へようこそ。ディスプレイ端末の管理、メディア素材のアップロード、多彩なレイアウトデザインの作成、そして柔軟な配信スケジュール設定まで、直感的な操作で行えます。',
             )}
           </p>
-          <div className="flex gap-2 mt-5">
-            {isXiboThemed && (
-              <>
-                <a href="https://docs.xibosignage.com" target="_blank" rel="noopener noreferrer">
-                  <Button variant="primary">{t('Documentation')}</Button>
-                </a>
-                <a
-                  href="https://xibosignage.com/training"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button variant="secondary">{t('Training')}</Button>
-                </a>
-              </>
-            )}
-          </div>
         </div>
       </section>
-      <section className="max-w-375 mx-auto flex flex-col gap-5 px-5">
+
+      <section className="max-w-5xl mx-auto flex flex-col gap-6 py-8 px-5">
         {/* Service Cards */}
-        {visibleServiceCards.map((card) => (
-          <div
-            key={card.serviceId}
-            id={card.serviceId}
-            className="flex flex-col gap-6 rounded-lg border border-gray-200 bg-white p-5 lg:flex-row"
-          >
-            {/* Image with video overlay */}
-            <div className="relative shrink-0 w-50">
-              <div className="rounded-lg h-full overflow-hidden">
-                <img
-                  src={card.imageUrl}
-                  alt={t(card.titleKey)}
-                  className="w-full h-full object-cover scale-105"
-                />
-              </div>
-              {card.videoLinks.length > 0 && isXiboThemed && (
-                <button
-                  type="button"
-                  onClick={() => openVideoModal(card.videoLinks)}
-                  className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/30 opacity-0 transition-opacity hover:opacity-100"
-                >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 cursor-pointer">
-                    <Play className="h-6 w-6 text-xibo-blue-600" />
-                  </div>
-                </button>
-              )}
-            </div>
-
-            {/* Text content */}
-            <div className="flex flex-1 flex-col justify-center">
-              <h3 className="mb-2 text-md font-bold text-gray-800">{t(card.titleKey)}</h3>
-              <p className="mb-4 text-sm text-gray-800">{t(card.descriptionKey)}</p>
-              <div className="flex flex-wrap gap-2">{renderServiceCardLinks(card)}</div>
-            </div>
-          </div>
-        ))}
-
-        {/* Resource/Others Cards */}
-        <div
-          className={`mb-16 grid gap-6 ${visibleResourceCards.length > 1 ? 'md:grid-cols-2 lg:grid-cols-3' : ''}`}
-        >
-          {visibleResourceCards.map((card) => {
-            const visibleLinks = card.links.filter((link) => !link.superAdminOnly || isSuperAdmin);
-            const Icon = card.icon;
-
-            return (
-              <div
-                key={card.titleKey}
-                className="flex flex-col rounded-lg border border-gray-200 bg-white p-5"
-              >
-                <div className="mb-3 flex h-11.5 w-11.5 items-center justify-center rounded-lg bg-teal-100">
-                  <Icon className="h-6 w-6 text-teal-800" strokeWidth={1} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {visibleServiceCards.map((card) => (
+            <div
+              key={card.serviceId}
+              id={card.serviceId}
+              className="flex flex-col rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow justify-between"
+            >
+              <div className="flex gap-4 items-start mb-4">
+                <div className="shrink-0 w-24 h-24 rounded-lg overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center">
+                  <img
+                    src={card.imageUrl}
+                    alt={t(card.titleKey)}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="mb-2 text-md font-bold text-gray-800">{t(card.titleKey)}</h3>
-                <p className="mb-4 flex-1 text-sm text-gray-800">{t(card.descriptionKey)}</p>
-                <div className="flex flex-wrap gap-4">
-                  {visibleLinks.map((link) => (
-                    <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
-                      <Button variant="link" className="p-0">
-                        {t(link.labelKey)}
-                      </Button>
-                    </a>
-                  ))}
+                <div className="flex-1">
+                  <h3 className="mb-1 text-lg font-bold text-gray-800">{t(card.titleKey)}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{t(card.descriptionKey)}</p>
                 </div>
               </div>
-            );
-          })}
+
+              <div className="flex items-center gap-2 pt-2 border-t border-gray-100">
+                {renderServiceCardLinks(card)}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
-
-      {/* Video Modal */}
-      {videoModalData && (
-        <VideoModal videos={videoModalData} onClose={() => setVideoModalData(null)} />
-      )}
     </div>
   );
 }

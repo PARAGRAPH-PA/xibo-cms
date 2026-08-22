@@ -19,8 +19,6 @@
  * along with Xibo.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { BookOpen, CircleHelp, PlayCircle, type LucideIcon } from 'lucide-react';
-
 import createContentImg from '@/assets/onboarding/create-content.png';
 import displaysImg from '@/assets/onboarding/displays.png';
 import existingContentImg from '@/assets/onboarding/existing-content.png';
@@ -43,7 +41,6 @@ export interface ServiceCard {
     to: string;
     isExternal?: boolean;
     variant?: 'primary' | 'secondary' | 'link';
-    xiboOnly?: boolean;
   }[];
   videoLinks: VideoLink[];
 }
@@ -52,159 +49,76 @@ export interface ResourceCard {
   titleKey: string;
   descriptionKey: string;
   iconName: string;
-  icon: LucideIcon;
-  xiboOnly?: boolean;
   links: {
     labelKey: string;
     url: string;
-    superAdminOnly?: boolean;
   }[];
 }
 
-// Main service/feature cards
+// Main service/feature cards (すべてシステム内部機能への導線のみに限定)
 export const SERVICE_CARDS: ServiceCard[] = [
   {
     serviceId: 'displays',
     titleKey: 'Displays',
     descriptionKey:
-      "Displays are managed from the CMS and control when and how content is shown. Get started by installing one of our Player App's to start scheduling content to show on Displays.",
+      'ディスプレイ端末の接続状態や稼働状況を一元管理します。各端末へのコンテンツ配信や設定変更をここから行えます。',
     imageUrl: displaysImg,
     featureFlags: ['displays.view'],
     links: [
-      { labelKey: 'Get Started', to: '/displays/displays', variant: 'primary' },
-      {
-        labelKey: 'Learn More',
-        to: 'https://xibosignage.com/manual/en/displays',
-        isExternal: true,
-        variant: 'link',
-        xiboOnly: true,
-      },
+      { labelKey: 'Manage Displays', to: '/displays/displays', variant: 'primary' },
     ],
-    videoLinks: [{ id: 'ZFpgArKZgU8', title: 'What is a Display?' }],
+    videoLinks: [],
   },
   {
     serviceId: 'existing-content',
     titleKey: 'Existing Content',
     descriptionKey:
-      'Do you already have an image or video content ready to be shown? Upload your media and schedule to be shown full screen on Displays in a few easy steps.',
+      '画像や動画ファイルなどのメディア素材をアップロードして管理します。アップロードした素材はすぐにスケジュール配信できます。',
     imageUrl: existingContentImg,
     featureFlags: ['library.view', 'layout.view'],
     links: [
       { labelKey: 'Upload Content', to: '/library/media', variant: 'primary' },
       { labelKey: 'Schedule Content', to: '/schedule/events', variant: 'secondary' },
-      {
-        labelKey: 'Learn More',
-        to: 'https://xibosignage.com/manual/en/getting_started_showing_an_image',
-        isExternal: true,
-        variant: 'link',
-        xiboOnly: true,
-      },
     ],
-    videoLinks: [
-      {
-        id: 'YZTiNOGY8JQ',
-        title: 'How to show an Image created outside of the CMS on Displays',
-      },
-      {
-        id: 'MLJPmadsjeI',
-        title: 'How to show a single video on Displays',
-      },
-    ],
+    videoLinks: [],
   },
   {
     serviceId: 'playlists',
     titleKey: 'Playlists',
     descriptionKey:
-      "Create a 'slideshow' of content to be shown in sequence to schedule and show on your Displays.",
+      '複数のコンテンツを順番に連続再生するプレイリストを作成・編集し、ディスプレイへ効率的に配信します。',
     imageUrl: playlistsImg,
     featureFlags: ['library.view', 'layout.view'],
     links: [
-      { labelKey: 'Get Started', to: '/library/playlists', variant: 'primary' },
-      {
-        labelKey: 'Learn More',
-        to: 'https://xibosignage.com/manual/en/getting_started_showing_a_playlist',
-        isExternal: true,
-        variant: 'link',
-        xiboOnly: true,
-      },
+      { labelKey: 'Create Playlist', to: '/library/playlists', variant: 'primary' },
     ],
-    videoLinks: [{ id: '2yLj4C1-zhA', title: 'How to create a Playlist and show on Displays' }],
+    videoLinks: [],
   },
   {
     serviceId: 'create-content',
     titleKey: 'Create Content',
     descriptionKey:
-      'Create your own eye catching Layout designs using a variety of tools available in the Layout Editor.',
+      '直感的なレイアウトエディタを使用して、テキスト、画像、動画、時計などを自由に配置したデザインを作成します。',
     imageUrl: createContentImg,
     featureFlags: ['library.view', 'layout.view'],
     links: [
-      { labelKey: 'Get Started', to: '/design/layout', variant: 'primary' },
-      {
-        labelKey: 'Learn More',
-        to: 'https://xibosignage.com/manual/en/layouts_editor',
-        isExternal: true,
-        variant: 'link',
-        xiboOnly: true,
-      },
+      { labelKey: 'Design Layout', to: '/design/layout', variant: 'primary' },
     ],
-    videoLinks: [{ id: '4cB0YpLqYtc', title: 'Layout Editor Overview' }],
+    videoLinks: [],
   },
   {
     serviceId: 'schedule',
     titleKey: 'Schedule',
     descriptionKey:
-      'Once you have your content ready to be shown, use the Scheduling tools to ensure that your content is shown at the right place at the right time.',
+      '作成したレイアウトやプレイリストを、指定した日時・時間帯・曜日に自動再生するスケジュールを設定します。',
     imageUrl: scheduleImg,
     featureFlags: ['schedule.view'],
     links: [
-      { labelKey: 'Get Started', to: '/schedule/events', variant: 'primary' },
-      {
-        labelKey: 'Learn More',
-        to: 'https://xibosignage.com/manual/en/simple_scheduling',
-        isExternal: true,
-        variant: 'link',
-        xiboOnly: true,
-      },
+      { labelKey: 'Schedule Events', to: '/schedule/events', variant: 'primary' },
     ],
-    videoLinks: [
-      { id: 'Aw-hFcs7mV4', title: 'Creating simple schedules to show content on Displays' },
-    ],
+    videoLinks: [],
   },
 ];
 
-// Resource/help cards at the bottom
-export const RESOURCE_CARDS: ResourceCard[] = [
-  {
-    titleKey: 'Documentation',
-    descriptionKey:
-      "Our documentation is there to help you at every turn. It's updated regularly to reflect changes and additions to the platform, and so it's a valuable reference tool for all users.",
-    iconName: 'documentation',
-    icon: BookOpen,
-    xiboOnly: true,
-    links: [
-      { labelKey: 'User Manual', url: 'https://xibosignage.com/docs' },
-      { labelKey: 'Admin', url: 'https://docs.xibosignage.com/', superAdminOnly: true },
-      {
-        labelKey: 'Developer',
-        url: 'https://docs.xibosignage.com/developer',
-        superAdminOnly: true,
-      },
-    ],
-  },
-  {
-    titleKey: 'Training',
-    descriptionKey: 'A collection of training videos to help new users get started.',
-    iconName: 'training',
-    icon: PlayCircle,
-    xiboOnly: true,
-    links: [{ labelKey: 'New User Training', url: 'https://xibosignage.com/training' }],
-  },
-  {
-    titleKey: 'Help',
-    descriptionKey: 'We are here to help! All the support you are looking for, at your fingertips.',
-    iconName: 'help',
-    icon: CircleHelp,
-    xiboOnly: true,
-    links: [{ labelKey: 'Help Centre', url: 'https://xibosignage.com/install-upgrade#install' }],
-  },
-];
+// Resource cards（外部Xiboリンクはすべて撤去）
+export const RESOURCE_CARDS: ResourceCard[] = [];

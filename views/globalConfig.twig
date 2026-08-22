@@ -18,7 +18,9 @@
         },
     };
 
-    moment.locale("{{ translate.jsLocale }}");
+    if (typeof moment !== 'undefined') {
+        moment.locale("{{ translate.jsLocale }}");
+    }
 
     $(function() {
         var csrf_token = $('meta[name="token"]').attr('content');

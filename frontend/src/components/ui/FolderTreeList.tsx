@@ -487,7 +487,11 @@ function FolderItem({
               isSelected && folder.id !== homeFolderId ? 'fill-xibo-blue-200' : '',
             )}
           />
-          <span className="truncate text-sm font-semibold">{folder.text}</span>
+          <span className="truncate text-sm font-semibold">
+            {folder.isRoot === 1 || folder.text === '/' || folder.text === 'RootFolder' || folder.text === 'Root Folder'
+              ? t('Root Folder', 'ルートフォルダー')
+              : folder.text}
+          </span>
         </div>
 
         <div className="pr-1">

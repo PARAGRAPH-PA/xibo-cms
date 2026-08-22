@@ -164,9 +164,7 @@ export default function UserMenu() {
 
               <MenuItem
                 icon={<Lightbulb size={18} />}
-                label={t('Introduction to {{appName}}', {
-                  appName: user?.branding?.appName ?? 'Xibo',
-                })}
+                label={t('Introduction to SUSTAINAMOTION', 'SUSTAINAMOTION のご案内')}
                 onClick={handleNavigateToWelcome}
               />
               <MenuItem

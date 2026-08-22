@@ -503,14 +503,14 @@ class Login extends Base
         $payload = [
             'version'     => Environment::$WEBSITE_VERSION_NAME,
             'revision'    => Environment::getGitCommit(),
-            'appName'     => $this->getConfig()->getThemeConfig('app_name', 'Xibo'),
-            'productName' => $this->getConfig()->getThemeConfig('theme_title', 'Xibo Digital Signage'),
+            'appName'     => $this->getConfig()->getThemeConfig('app_name', 'SUSTAINAMOTION'),
+            'productName' => $this->getConfig()->getThemeConfig('theme_title', 'SUSTAINAMOTION'),
             'logoUrl'     => $rootUri . 'brand/' . $logoFile,
             'logoIconUrl' => $rootUri . 'brand/' . $iconFile,
-            'supportUrl'  => $this->getConfig()->getThemeConfig('theme_url', 'https://xibosignage.com'),
+            'supportUrl'  => $this->getConfig()->getThemeConfig('theme_url', ''),
             'sourceUrl'   => $this->getConfig()->getThemeConfig(
                 'cms_source_url',
-                'https://github.com/xibosignage/xibo-cms'
+                ''
             ),
             'aboutText'   => $this->getConfig()->getThemeConfig('about_text') ?? '',
         ];

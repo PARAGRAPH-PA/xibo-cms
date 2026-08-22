@@ -52,34 +52,13 @@ export default function HelpMainPanel({
       <div className="py-2">
         <HelpCard
           icon={Lightbulb}
-          title={t('Introduction to {{appName}}', { appName })}
-          desc={t('Get to know your CMS')}
+          title={t('Introduction to SUSTAINAMOTION', 'SUSTAINAMOTION のご案内')}
+          desc={t('Get to know your CMS', 'サイネージシステムの基本機能を見る')}
           to="/welcome"
         />
       </div>
 
-      <HelpGuides links={links} landingPage={landingPage} isXiboThemed={isXiboThemed} />
-
-      {isXiboThemed && (
-        <>
-          <HelpHeader title={t('Resources')} />
-          <div className="flex flex-col py-2">
-            <HelpCard
-              icon={Smile}
-              title={t('Feedback')}
-              desc={t('Help us improve')}
-              onClick={onOpenFeedback}
-            />
-            <HelpCard
-              icon={PlaySquare}
-              title={t('Training')}
-              desc={t('Access guides and tutorials')}
-              href={TRAINING_URL}
-              target="_blank"
-            />
-          </div>
-        </>
-      )}
+      <HelpGuides links={links} landingPage={landingPage} isXiboThemed={false} />
     </div>
   );
 }

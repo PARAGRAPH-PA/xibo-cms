@@ -21,7 +21,7 @@
 
 import type { ColumnDef, PaginationState, SortingState } from '@tanstack/react-table';
 import type { TFunction } from 'i18next';
-import { ArrowRight, Check, Loader2, Newspaper, X } from 'lucide-react';
+import { ArrowRight, Check, Loader2, X } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -184,8 +184,6 @@ export default function Dashboard() {
     { name: t('Not up-to-date'), value: notUpToDate, color: '#E5E7EB' },
   ];
 
-  const latestNews = (data?.latestNews ?? []) as NewsItem[];
-
   return (
     <section className="flex flex-col space-y-5 p-5">
       {error && (
@@ -201,54 +199,28 @@ export default function Dashboard() {
         <StatCard icon={users} value={userCount} label={t('Active Users')} />
       </div>
 
-      {/* Charts & News */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Display Activity */}
-        <div className="rounded-lg flex flex-col border border-gray-200 bg-slate-50 p-5 space-y-8">
-          <div className="flex items-center justify-between">
-            <h3 className="text-base font-semibold text-gray-800">{t('Display Activity')}</h3>
-            <Link
-              to="/displays/displays"
-              className="flex items-center gap-1 text-sm text-xibo-blue-600 hover:underline"
-            >
-              {t('Displays page')} <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </div>
-          {isLoading ? (
-            <div className="flex flex-col items-center justify-center h-full">
-              <Loader2 className="w-8 h-8 animate-spin text-gray-600" />
-              <span className="mt-2 text-gray-500">{t('Loading...')}</span>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-              <DisplayChart data={statusData} label={t('Status')} />
-              <DisplayChart data={contentStatusData} label={t('Content Status')} />
-            </div>
-          )}
+      {/* Display Activity */}
+      <div className="rounded-lg flex flex-col border border-gray-200 bg-slate-50 p-5 space-y-8">
+        <div className="flex items-center justify-between">
+          <h3 className="text-base font-semibold text-gray-800">{t('Display Activity')}</h3>
+          <Link
+            to="/displays/displays"
+            className="flex items-center gap-1 text-sm text-xibo-blue-600 hover:underline"
+          >
+            {t('Displays page')} <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
-
-        {/* Latest News */}
-        <div className="rounded-lg border border-gray-200 bg-white p-5 max-h-100 flex flex-col overflow-hidden">
-          <div className="mb-4 flex items-center gap-2">
-            <Newspaper className="h-5 w-5 text-gray-600" />
-            <h3 className="text-base font-semibold text-gray-800">{t('Latest News')}</h3>
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center h-full">
+            <Loader2 className="w-8 h-8 animate-spin text-gray-600" />
+            <span className="mt-2 text-gray-500">{t('Loading...')}</span>
           </div>
-          {isLoading ? (
-            <div className="flex flex-col items-center justify-center h-full">
-              <Loader2 className="w-8 h-8 animate-spin text-gray-600" />
-              <span className="mt-2 text-gray-500">{t('Loading...')}</span>
-            </div>
-          ) : (
-            <div className="flex flex-col flex-1 overflow-auto">
-              {latestNews.map((news) => (
-                <NewsArticle key={news.link} news={news} />
-              ))}
-              {latestNews.length === 0 && (
-                <p className="text-sm text-gray-400">{t('No news available.')}</p>
-              )}
-            </div>
-          )}
-        </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <DisplayChart data={statusData} label={t('Status')} />
+            <DisplayChart data={contentStatusData} label={t('Content Status')} />
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">

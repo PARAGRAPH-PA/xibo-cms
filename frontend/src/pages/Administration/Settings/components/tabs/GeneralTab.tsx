@@ -154,17 +154,6 @@ export default function GeneralTab({
             disabled={!isEditable('DEFAULTS_IMPORTED')}
           />
         )}
-        {isVisible('DASHBOARD_LATEST_NEWS_ENABLED') && (
-          <SwitchRow
-            title={t('Enable Latest News?')}
-            description={t(
-              'Should the Dashboard show latest news? The address is provided by the theme.',
-            )}
-            checked={formValues.DASHBOARD_LATEST_NEWS_ENABLED === '1'}
-            onChange={(v) => updateField('DASHBOARD_LATEST_NEWS_ENABLED', v ? '1' : '0')}
-            disabled={!isEditable('DASHBOARD_LATEST_NEWS_ENABLED')}
-          />
-        )}
         {isVisible('INSTANCE_SUSPENDED') && (
           <SelectDropdown
             label={t('Instance Suspended')}
@@ -179,16 +168,6 @@ export default function GeneralTab({
             ]}
             onSelect={(v) => updateField('INSTANCE_SUSPENDED', v)}
             disabled={!isEditable('INSTANCE_SUSPENDED')}
-          />
-        )}
-        {isVisible('LATEST_NEWS_URL') && (
-          <TextInput
-            name="LATEST_NEWS_URL"
-            label={t('Latest News URL')}
-            helpText={t('RSS/Atom Feed to be displayed on the Status Dashboard')}
-            value={formValues.LATEST_NEWS_URL ?? ''}
-            onChange={(v) => updateField('LATEST_NEWS_URL', v)}
-            disabled={!isEditable('LATEST_NEWS_URL')}
           />
         )}
         {isVisible('REPORTS_EXPORT_SHOW_LOGO') && (

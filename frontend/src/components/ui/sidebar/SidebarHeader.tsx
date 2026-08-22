@@ -35,18 +35,18 @@ export function SidebarHeader({ isCollapsed, contentHidden, closeMobileDrawer }:
   const showLogo = !contentHidden;
 
   return (
-    <div className={`flex items-center h-10 ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
+    <div className={`flex items-center min-h-11 ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
       {showLogo ? (
-        <div className="flex items-center animate-fade-in">
+        <div className="flex items-center animate-fade-in py-1">
           <img
             src={logoUrl}
             alt={appName}
-            className="w-[77.287px] h-10 object-contain object-left"
+            className="w-auto max-w-[200px] h-9 md:h-10 object-contain object-left"
           />
         </div>
       ) : (
-        <div className="flex justify-center">
-          <img src={faviconUrl} alt={appName} className="w-11 h-10 object-contain" />
+        <div className="flex justify-center py-1">
+          <img src={faviconUrl} alt={appName} className="w-8 h-8 object-contain" />
         </div>
       )}
 

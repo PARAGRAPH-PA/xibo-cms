@@ -176,13 +176,13 @@ class User extends Base
         $logoDarkFile = $this->getConfig()->getBrandLogoDarkFile();
 
         $branding = [
-            'productName' => $brandConfig['productName'] ?? 'Xibo Digital Signage',
-            'appName'     => $brandConfig['appName']     ?? 'Xibo',
+            'productName' => $brandConfig['productName'] ?? 'SUSTAINAMOTION',
+            'appName'     => $brandConfig['appName']     ?? 'SUSTAINAMOTION',
             'logoUrl'     => '/brand/' . $logoFile,
             'logoDarkUrl' => '/brand/' . $logoDarkFile,
             'faviconUrl'  => '/brand/' . $iconFile,
             'cssUrl'      => '/brand/theme.css',
-            'supportUrl'  => $brandConfig['supportUrl']  ?? 'https://xibosignage.com',
+            'supportUrl'  => $brandConfig['supportUrl']  ?? '',
         ];
 
         // Cloud metadata.

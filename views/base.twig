@@ -78,7 +78,9 @@
         {% if settings.CALENDAR_TYPE == "Jalali" %}
             <script src="{{ theme.rootUri() }}dist/vendor/calendar/js/calendar-jalali.js?v={{ version }}&rev={{revision}}" nonce="{{ cspNonce }}"></script>
             <script type="text/javascript" nonce="{{ cspNonce }}">
-                moment.loadPersian();
+                if (typeof moment !== 'undefined' && typeof moment.loadPersian === 'function') {
+                    moment.loadPersian();
+                }
             </script>
         {% else %}
             <script src="{{ theme.rootUri() }}dist/vendor/calendar/js/calendar.js?v={{ version }}&rev={{revision}}" nonce="{{ cspNonce }}"></script>

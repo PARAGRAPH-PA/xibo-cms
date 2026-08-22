@@ -456,7 +456,7 @@ export function FileUploader({
 
   const uniqueExts = Array.from(new Set(extensions)).join(', ');
   const sizeString = formatBytes(maxSize, t);
-  const helperText = `(${t('Maximum file size: {{size}}', { size: sizeString })}) Supported formats:`;
+  const helperText = `(${t('Maximum file size: {{size}}', { size: sizeString })}) ${t('Supported formats:')}`;
 
   return (
     <div className="flex flex-col gap-3">

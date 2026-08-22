@@ -65,7 +65,7 @@
     "@mapbox/leaflet-pip": "^1.1.0",
     "@popperjs/core": "^2.11.8",
     "@ssddanbrown/codemirror-lang-twig": "^1.0.0",
-    "@xibosignage/xibo-layout-renderer": "https+git@github.com:xibosignage/xibo-layout-renderer.git#5f8b6c698b855821b2885bcc28a65bb80357f251",
+    "@xibosignage/xibo-layout-renderer": "git+https://github.com/xibosignage/xibo-layout-renderer.git#5f8b6c698b855821b2885bcc28a65bb80357f251",
     "@xiechao/codemirror-lang-handlebars": "^1.0.4",
     "ajax-bootstrap-select": "^1.4.5",
     "blueimp-file-upload": "^10.32.0",
@@ -135,9 +135,6 @@
     "brace-expansion": "^1.1.18",
     "picomatch": "^2.3.2",
     "fast-uri": "^3.1.5",
-    "nanoid": "3.3.18",
-    "@xibosignage/xibo-layout-renderer": {
-      "nanoid": "5.1.16"
-    }
+    "nanoid": "3.3.18"
   }
 }

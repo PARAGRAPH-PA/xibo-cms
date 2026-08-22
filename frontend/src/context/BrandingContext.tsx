@@ -33,13 +33,13 @@ const SIDEBAR_CONTRAST_ATTR = 'data-sidebar-contrast';
 // /brand/favicon.ico from the Twig shell, already branded per install (default vs WL).
 // faviconUrl below is only used as the collapsed-sidebar icon mark (SidebarHeader.tsx).
 const defaults: BrandingConfig = {
-  productName: 'Xibo Digital Signage',
-  appName: 'Xibo',
-  logoUrl: '/brand/logo.svg',
-  logoDarkUrl: '/brand/logo-dark.svg',
-  faviconUrl: '/brand/logo-icon.svg',
+  productName: 'SUSTAINAMOTION',
+  appName: 'SUSTAINAMOTION',
+  logoUrl: '/brand/logo.png',
+  logoDarkUrl: '/brand/logo-dark.png',
+  faviconUrl: '/brand/logo-icon.png',
   cssUrl: '/brand/theme.css',
-  supportUrl: 'https://xibosignage.com',
+  supportUrl: '',
 };
 
 const BrandingContext = createContext<BrandingConfig>(defaults);

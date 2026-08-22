@@ -575,7 +575,7 @@ export function EventCalendar({
                     >
                       <Icon className="w-4 h-4" />
                     </span>
-                    <span className="text-xs font-semibold text-gray-500">{label}</span>
+                    <span className="text-xs font-semibold text-gray-500">{t(label)}</span>
                   </li>
                 ))}
               </ul>

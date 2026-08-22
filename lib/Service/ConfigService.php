@@ -306,13 +306,13 @@ class ConfigService implements ConfigServiceInterface
     {
         $this->themeLoaded = true;
         $this->themeConfig = [
-            'theme_name'     => 'Xibo Default Theme',
-            'theme_title'    => 'Xibo Digital Signage',
-            'app_name'       => 'Xibo',
-            'theme_url'      => 'https://xibosignage.com',
-            'cms_source_url'           => 'https://github.com/xibosignage/xibo-cms',
+            'theme_name'     => 'SUSTAINAMOTION Theme',
+            'theme_title'    => 'SUSTAINAMOTION',
+            'app_name'       => 'SUSTAINAMOTION',
+            'theme_url'      => '',
+            'cms_source_url'           => '',
             'about_text'               => null,
-            'remove_licence_from_login' => false,
+            'remove_licence_from_login' => true,
             'themeCode'                => 'default',
             'themeFolder'    => '',
         ];

@@ -75,6 +75,7 @@
     "recharts": "^3.8.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
+    "xibo-cms": "file:..",
     "zod": "^3.25.76"
   },
   "devDependencies": {

@@ -67,28 +67,11 @@ export function AboutModalContent() {
       <section>
         <h2 className="text-xl font-semibold text-gray-900 mb-2">
           {appName}
-          {appName === 'Xibo' && (
-            <span className="text-base font-semibold text-gray-500">
-              {' '}
-              - Simple. Intuitive. Impactful. Secure.
-            </span>
-          )}
         </h2>
         <p>
-          {appName === 'Xibo' && (
-            <>
-              Xibo Digital Signage -{' '}
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href="https://xibosignage.com"
-                className="text-blue-600 hover:underline"
-              >
-                xibosignage.com
-              </a>
-              .<br />
-            </>
-          )}
+          SUSTAINAMOTION デジタルサイネージ システム
+        </p>
+        <p>
           {/* Copyright notice is retained regardless of branding — required by the AGPL. */}
           Copyright &copy; 2006-{currentYear} Xibo Signage Ltd and the{' '}
           <a

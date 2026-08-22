@@ -1,0 +1,66 @@
+services:
+  db:
+    image: mysql:8.4
+    volumes:
+      - ./containers/db:/var/lib/mysql:Z
+    environment:
+      - MYSQL_DATABASE=cms
+      - MYSQL_USER=cms
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-root}
+      - TZ=Asia/Tokyo
+    command: >
+      mysqld
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-time-zone=+09:00
+      --max_connections=500
+      --innodb_buffer_pool_size=512M
+    restart: always
+    ports:
+      - "${DB_PORT:-3315}:3306"
+
+  memcached:
+    image: memcached:alpine
+    restart: always
+
+  xmr:
+    image: ghcr.io/xibosignage/xibo-xmr:develop
+    volumes:
+      - ./containers/xmr/shared:/var/www/cms/library:Z
+    environment:
+      - XMR_HOST=xmr
+      - XMR_DEBUG=false
+      - TZ=Asia/Tokyo
+    restart: always
+    ports:
+      - "${XMR_PORT:-9505}:9505"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/var/www/cms:Z
+      - ./containers/web/shared:/var/www/cms/library:Z
+      - ./containers/web/userscripts:/var/www/cms/userscripts:Z
+      - ./containers/web/ca-certs:/usr/local/share/ca-certificates:Z
+      - ./containers/web/backup:/var/www/backup:Z
+    environment:
+      - CMS_SERVER_NAME=${CMS_SERVER_NAME:-localhost}
+      - XTR_ENABLED=true
+      - XMR_HOST=xmr
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_USER=cms
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-root}
+      - MYSQL_DATABASE=cms
+      - CMS_DEV_MODE=false
+      - TZ=Asia/Tokyo
+    restart: always
+    ports:
+      - "${CMS_PORT:-8085}:80"
+    depends_on:
+      - db
+      - memcached
+      - xmr
